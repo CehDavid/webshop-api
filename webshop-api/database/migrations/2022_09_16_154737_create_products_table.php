@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('brand');
             $table->timestamps();
         });
-        Schema::create('categorys', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('category');
             $table->timestamps();
@@ -34,7 +34,7 @@ return new class extends Migration
                 $table->unsignedBigInteger('brand_id');
                 $table->foreign('brand_id')->references('id')->on('brands');
                 $table->unsignedBigInteger('category_id');
-                $table->foreign('category_id')->references('id')->on('categorys');
+                $table->foreign('category_id')->references('id')->on('categories');
                 $table->timestamps();
         });
     }
@@ -47,7 +47,7 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('brands');
-        Schema::dropIfExists('categorys');
+        Schema::dropIfExists('categories');
         Schema::dropIfExists('products');
     }
 };

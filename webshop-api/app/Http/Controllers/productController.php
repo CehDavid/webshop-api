@@ -4,12 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\DB;
 
 class productController extends Controller
 {
     public function getProducts(){
-        $product = Product::all();
+        
+        $product = DB::table('products')
+            ->join('brands','products.brand_id','=','brands.id')
+            ->join('categories', 'products.category_id','=', 'categories.id')
+            ->select('products.*','brands.brand','categories.category')
+            ->get();
+       
         return response()->json($product, 200);
+
     }
 
     public function getProduct($id){
@@ -32,7 +40,7 @@ class productController extends Controller
              $request->image = $compPic;
          }
  
- 
+
          $product = Product::create(
              [
                  'title'=> $request->title,
